@@ -1,0 +1,23 @@
+﻿@model TestFirstWebApp.Models.AddNumbersViewModel
+
+@{
+    ViewBag.Title = "Add Numbers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (@Html.BeginForm("Calculate", "Home", FormMethod.Post))
+{
+    <div class="row">
+        @Html.EditorFor(x => Model.Number1);
+    </div>
+    <div class="row">
+        @Html.EditorFor(y => Model.Y);
+    </div>
+    
+
+    <input type="submit" value="Calculate"/>
+}
+
+
