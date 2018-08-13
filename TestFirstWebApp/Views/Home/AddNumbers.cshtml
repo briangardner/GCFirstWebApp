@@ -7,17 +7,113 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (@Html.BeginForm("Calculate", "Home", FormMethod.Post))
-{
-    <div class="row">
-        @Html.EditorFor(x => Model.Number1);
-    </div>
-    <div class="row">
-        @Html.EditorFor(y => Model.Y);
-    </div>
-    
+@*
+    @using (@Html.BeginForm("Calculate", "Home", FormMethod.Post))
+    {
+        <div class="row">
+            @Html.EditorFor(x => Model.Number1);
+        </div>
+        <div class="row">
+            @Html.EditorFor(y => Model.Y);
+        </div>
 
-    <input type="submit" value="Calculate"/>
+
+        <input type="submit" value="Calculate"/>
+    }
+*@
+
+<!-- **** Make sure to add jqueryval bundle in your _Layout.cshtml!!!
+
+-->
+@section scripts
+{
+    <script type="text/javascript">
+        //When the document loads, run this
+        $(document).ready(function() {
+
+            //set up validation on my numberForm
+            $("#numberForm").validate({
+                wrapper: "div",
+                rules: {
+                    //requirements for each named element
+                    'Number1': {
+                        required: true, //required
+                        min: 0 // cannot be negative
+                    },
+                    'Y': {
+                        required: true, //required
+                        min: 0 // cannot be negative
+                    },
+                    'Name': {
+                        required: true,
+                        minLength: 3 //must be at least 3 characters
+                    },
+                    'Email': {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    //configure messages when error condition tripped.
+                    'Number1': {
+                        required: "Number 1 is required",
+                        min: "Number 1 cannot be negative"
+                    },
+                    'Y': {
+                        required: "Y is required",
+                        min: "Y cannot be negative"
+                    },
+                    'Name': {
+                        required: "Name is required",
+                        minLength: "Must be at least 3 characters"
+                    },
+                    'Email': {
+                        required: "Please provide an email address",
+                        email: "Email is not in a valid format"
+                    }
+                }
+            });
+
+        });
+    </script>
 }
 
+
+<!--
+This is the same as the form above, but not strongly typed.
+
+However I can use jQuery directly on the fields in this form.
+
+There is another way to do validation using the above form method,
+    but we haven't covered it in class yet.
+-->
+<form id="numberForm" action="/Home/Calculate" method="post">
+    <div class="row">
+        <div class="col-md-12">
+            <label for="Number1">Number 1</label>
+            <input id="Number1" required min="0" class="form-control input-sm" type="number" name="Number1" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="Y">Y</label>
+            <input id="Y" class="form-control input-sm" type="number" name="Y" required="" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label>Name</label>
+            <input type="text" name="Name" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label>Email</label>
+            <input type="email" name="Email" class="form-control" />
+        </div>
+    </div>
+    <input type="submit" id="submit" value="Calculate" />
+</form>
 
