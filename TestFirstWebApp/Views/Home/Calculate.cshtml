@@ -1,13 +1,52 @@
-﻿@model TestFirstWebApp.Models.AddNumbersViewModel
+﻿@using Newtonsoft.Json
+@model TestFirstWebApp.Models.AddNumbersViewModel
 
 @{
     ViewBag.Title = "Calculate";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script>
+        function storeAddNumbersData() {
+            /*Converts the model to JSON.  The Html.Raw stops it from being turned into a string with "'s around it.
+             JSON.parse and JSON.stringify are built into Javascript.
+             */
+            var data = @Html.Raw(JsonConvert.SerializeObject(Model));
+            try {
+                var storage = window['localStorage'];
+                storage.setItem("data", JSON.stringify(data));
+            } catch (e) {
+                alert("Error using local storage: " + e);
+            }
+
+        }
+
+        /*I can get data back out of Local Storage.  Note: I can't assign it back to
+          ViewBag or Model, because those are rendered on the server.  But I could
+          use jQuery to put the data back into HTML elements in the DOM.
+         */
+
+        function getAddNumbersData() {
+            try {
+                var storage = window['localStorage'];
+                var data = JSON.parse(storage.getItem("data"));
+                console.log( data);
+                alert(JSON.stringify(data));
+            } catch (e) {
+                alert("An error with localStorage occurred.");
+            }
+        }
+    </script>
 }
 
 <h2>Calculate</h2>
 
 <h3>Sum = @Html.DisplayFor(x => Model.Result)</h3>
 
+<button type="button" onclick="javascript: storeAddNumbersData();" class="btn btn-default">Store</button>
+<button type="button" onclick="javascript: getAddNumbersData();" class="btn btn-default">GetData</button>
+<div>
+    <p>@ViewBag.Something</p>
+</div>
 <p>Welcome @Model.Name</p>
 

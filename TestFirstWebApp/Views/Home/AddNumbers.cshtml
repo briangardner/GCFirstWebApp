@@ -1,4 +1,5 @@
-﻿@model TestFirstWebApp.Models.AddNumbersViewModel
+﻿@using Newtonsoft.Json
+@model TestFirstWebApp.Models.AddNumbersViewModel
 
 @{
     ViewBag.Title = "Add Numbers";
@@ -32,50 +33,56 @@
         $(document).ready(function() {
 
             //set up validation on my numberForm
-            $("#numberForm").validate({
-                wrapper: "div",
-                rules: {
-                    //requirements for each named element
-                    'Number1': {
-                        required: true, //required
-                        min: 0 // cannot be negative
+            $("#numberForm").validate(
+                {
+                    wrapper: "div",
+                    rules: {
+                        //requirements for each named element
+                        'Number1': {
+                            required: true, //required
+                            min: 0 // cannot be negative
+                        },
+                        'Y': {
+                            required: true, //required
+                            min: 0 // cannot be negative
+                        },
+                        'Name': {
+                            required: true,
+                            minLength: 3 //must be at least 3 characters
+                        },
+                        'Email': {
+                            required: true,
+                            email: true
+                        }
                     },
-                    'Y': {
-                        required: true, //required
-                        min: 0 // cannot be negative
-                    },
-                    'Name': {
-                        required: true,
-                        minLength: 3 //must be at least 3 characters
-                    },
-                    'Email': {
-                        required: true,
-                        email: true
-                    }
-                },
-                messages: {
-                    //configure messages when error condition tripped.
-                    'Number1': {
-                        required: "Number 1 is required",
-                        min: "Number 1 cannot be negative"
-                    },
-                    'Y': {
-                        required: "Y is required",
-                        min: "Y cannot be negative"
-                    },
-                    'Name': {
-                        required: "Name is required",
-                        minLength: "Must be at least 3 characters"
-                    },
-                    'Email': {
-                        required: "Please provide an email address",
-                        email: "Email is not in a valid format"
+                    messages: {
+                        //configure messages when error condition tripped.
+                        'Number1': {
+                            required: "Number 1 is required",
+                            min: "Number 1 cannot be negative"
+                        },
+                        'Y': {
+                            required: "Y is required",
+                            min: "Y cannot be negative"
+                        },
+                        'Name': {
+                            required: "Name is required",
+                            minLength: "Must be at least 3 characters"
+                        },
+                        'Email': {
+                            required: "Please provide an email address",
+                            email: "Email is not in a valid format"
+                        }
                     }
                 }
-            });
+            );
 
         });
+
+
     </script>
+    
+    
 }
 
 
@@ -114,6 +121,6 @@ There is another way to do validation using the above form method,
             <input type="email" type="email" required name="Email" class="form-control" />
         </div>
     </div>
-    <input type="submit" id="submit" value="Calculate" />
+    <input type="submit" id="submit" value="Calculate"/>
 </form>
 
