@@ -22,3 +22,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.in-class-style {
+    background-color: aqua !important;
+}
